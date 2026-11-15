@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Concept Coach · Maths</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbf7f0; --card:#ffffff; --ink:#1f2a37; --muted:#6b7280; --line:#e8e1d5;
+  --brand:#e8590c; --brand-soft:#fff0e6; --accent:#1c7ed6;
+  --good:#2b8a3e; --goodbg:#e6f4ea; --mid:#b07d00; --midbg:#fff4d6;
+  --bad:#c92a2a; --badbg:#fde8e8; --none:#6b7280; --nonebg:#eef0f3;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#14161a; --card:#1d2026; --ink:#e9ecef; --muted:#9aa3ad; --line:#2c3038;
+    --brand:#ff8a3d; --brand-soft:#3a2516; --accent:#4dabf7;
+    --good:#69db7c; --goodbg:#16301e; --mid:#ffd43b; --midbg:#352b0d;
+    --bad:#ff8787; --badbg:#3a1a1a; --none:#adb5bd; --nonebg:#262a31;
+  }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Nunito,system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.5}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line);background:var(--card)}
+.logo{font-weight:800;font-size:18px;display:flex;align-items:center;gap:8px}
+.logo .dot{width:28px;height:28px;border-radius:8px;background:var(--brand);color:#fff;display:grid;place-items:center;font-size:15px}
+.who{color:var(--muted);font-size:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+main{max-width:860px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:26px;margin:4px 0 6px;font-weight:800}
+h2{font-size:19px;margin:24px 0 10px;font-weight:800}
+.muted{color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:12px 0}
+.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}
+.stat .n{font-size:28px;font-weight:800}
+.stat .l{color:var(--muted);font-size:14px}
+button,.btn{font:inherit;font-weight:700;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:10px 16px;cursor:pointer}
+button.primary{background:var(--brand);border-color:var(--brand);color:#fff}
+button:disabled{opacity:.45;cursor:not-allowed}
+button.link{border:none;background:none;color:var(--accent);padding:4px;font-weight:700}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+label{display:block;font-weight:700;margin:12px 0 4px}
+input,select{font:inherit;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);width:100%;max-width:340px}
+.err{color:var(--bad);font-weight:700;margin-top:10px}
+.ok{color:var(--good);font-weight:700;margin-top:10px}
+.chip{display:inline-block;padding:2px 10px;border-radius:999px;font-size:13px;font-weight:700;white-space:nowrap}
+@media (max-width:560px){ header.top{flex-wrap:wrap} .logo .sub{display:none} }
+.s-strong{background:var(--goodbg);color:var(--good)}
+.s-practice{background:var(--midbg);color:var(--mid)}
+.s-weak{background:var(--badbg);color:var(--bad)}
+.s-nodata{background:var(--nonebg);color:var(--none)}
+.concepts{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.concept{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.03em}
+.tablewrap{overflow-x:auto}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px}
+.tabs a{text-decoration:none;color:var(--ink);font-weight:700;padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);font-size:14px}
+.tabs a.on{background:var(--brand-soft);border-color:var(--brand);color:var(--brand)}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.qtext{font-size:21px;font-weight:700;margin:14px 0}
+.opts{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.opt{text-align:left;padding:14px;font-size:17px}
+.opt.sel{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent) inset}
+.opt.right{background:var(--goodbg);border-color:var(--good)}
+.opt.wrong{background:var(--badbg);border-color:var(--bad)}
+.progress{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.progress > i{display:block;height:100%;background:var(--brand)}
+.feedback{padding:12px 14px;border-radius:12px;margin-top:14px;font-weight:700}
+.feedback.right{background:var(--goodbg);color:var(--good)}
+.feedback.wrong{background:var(--badbg);color:var(--bad)}
+.feedback.skip{background:var(--nonebg);color:var(--none)}
+.bar{display:flex;align-items:center;gap:10px;margin:6px 0}
+.bar .t{width:170px;font-size:14px}
+.bar .b{flex:1;height:12px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar .b i{display:block;height:100%;background:var(--accent)}
+.bar .v{width:48px;text-align:right;font-size:14px;font-weight:700}
+.badge{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;padding:2px 8px;border-radius:6px;background:var(--nonebg);color:var(--muted)}
+.badge.olympiad{background:var(--brand-soft);color:var(--brand)}
+.login{max-width:380px;margin:40px auto}
+.help li{margin:6px 0}
+@media (max-width:560px){ h1{font-size:22px} .qtext{font-size:19px} .bar .t{width:110px} }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="logo"><span class="dot">∑</span> Concept Coach <span class="muted sub" style="font-weight:600">· Maths</span></div>
+  <div class="who" id="who"></div>
+</header>
+<main id="app"></main>
+
+<script>
+/* ============ Content ============ */
+const CONCEPTS = [
+  {id:'num',   name:'Large numbers & place value', tip:'Practise reading and writing numbers in lakhs, and rounding to the nearest ten, hundred and thousand.'},
+  {id:'fm',    name:'Factors, multiples, HCF & LCM', tip:'List factors and multiples side by side, then circle the common ones before finding HCF or LCM.'},
+  {id:'frac',  name:'Fractions', tip:'Convert to a common denominator before adding, subtracting or comparing fractions.'},
+  {id:'dec',   name:'Decimals', tip:'Line up the decimal points, and count decimal places when multiplying.'},
+  {id:'int',   name:'Integers', tip:'Use a number line: moving right adds, moving left subtracts. Subtracting a negative means moving right.'},
+  {id:'ratio', name:'Ratio & proportion', tip:'Find the value of one part first (unitary method), then multiply.'},
+  {id:'mens',  name:'Perimeter & area', tip:'Draw the shape and label every side. Perimeter adds lengths, area multiplies them.'},
+  {id:'logic', name:'Patterns & reasoning', tip:'Write the difference between terms underneath the sequence to spot the rule.'}
+];
+const CNAME = Object.fromEntries(CONCEPTS.map(c=>[c.id,c.name]));
+
+const Q = [
+  {id:'num-e1',c:'num',d:'easy',t:'mcq',q:'What is the place value of 7 in 4,73,215?',o:['7','700','7,000','70,000'],a:'70,000'},
+  {id:'num-e2',c:'num',d:'easy',t:'num',q:'Write "five lakh six thousand twenty" in figures.',a:'506020'},
+  {id:'num-m1',c:'num',d:'medium',t:'mcq',q:'Round 3,46,850 to the nearest thousand.',o:['3,46,000','3,47,000','3,46,900','3,50,000'],a:'3,47,000'},
+  {id:'num-m2',c:'num',d:'medium',t:'num',q:'How many 4-digit numbers are there in all?',a:'9000'},
+  {id:'num-o1',c:'num',d:'olympiad',t:'num',q:'What is the smallest 5-digit number that uses each of the digits 0, 3, 5, 7 and 9 exactly once?',a:'30579'},
+  {id:'num-o2',c:'num',d:'olympiad',t:'num',q:'What is the difference between the place values of the two 6s in 6,26,341?',a:'594000'},
+
+  {id:'fm-e1',c:'fm',d:'easy',t:'mcq',q:'Which of these is a prime number?',o:['21','27','29','33'],a:'29'},
+  {id:'fm-e2',c:'fm',d:'easy',t:'num',q:'What is the HCF of 12 and 18?',a:'6'},
+  {id:'fm-m1',c:'fm',d:'medium',t:'num',q:'What is the LCM of 12 and 18?',a:'72'},
+  {id:'fm-m2',c:'fm',d:'medium',t:'mcq',q:'Which number is divisible by both 3 and 4?',o:['104','126','132','142'],a:'132'},
+  {id:'fm-o1',c:'fm',d:'olympiad',t:'num',q:'What is the smallest number greater than 1 that leaves a remainder of 1 when divided by 2, 3, 4, 5 and 6?',a:'61'},
+  {id:'fm-o2',c:'fm',d:'olympiad',t:'mcq',q:'Three bells ring every 6, 8 and 12 minutes. They ring together at 9:00 AM. When will they next ring together?',o:['9:12 AM','9:24 AM','9:48 AM','10:00 AM'],a:'9:24 AM'},
+
+  {id:'frac-e1',c:'frac',d:'easy',t:'mcq',q:'Which fraction is equal to 2/3?',o:['4/9','6/9','3/2','4/5'],a:'6/9'},
+  {id:'frac-e2',c:'frac',d:'easy',t:'frac',q:'1/4 + 2/4 = ? (write your answer as a fraction)',a:'3/4'},
+  {id:'frac-m1',c:'frac',d:'medium',t:'mcq',q:'Which is the largest?',o:['3/5','5/8','2/3','7/12'],a:'2/3'},
+  {id:'frac-m2',c:'frac',d:'medium',t:'num',q:'What is 2/3 of 45?',a:'30'},
+  {id:'frac-m3',c:'frac',d:'medium',t:'frac',q:'5/6 − 1/3 = ? (write your answer as a fraction)',a:'1/2'},
+  {id:'frac-o1',c:'frac',d:'olympiad',t:'num',q:'A tank is 3/4 full. After 30 litres are used, it is 1/2 full. What is the capacity of the tank in litres?',a:'120'},
+  {id:'frac-o2',c:'frac',d:'olympiad',t:'num',q:'1/2 + 1/3 + 1/6 = ?',a:'1'},
+
+  {id:'dec-e1',c:'dec',d:'easy',t:'num',q:'0.5 + 0.25 = ?',a:'0.75'},
+  {id:'dec-e2',c:'dec',d:'easy',t:'mcq',q:'Which is the greatest?',o:['0.8','0.75','0.09','0.799'],a:'0.8'},
+  {id:'dec-m1',c:'dec',d:'medium',t:'num',q:'Write 3/8 as a decimal.',a:'0.375'},
+  {id:'dec-m2',c:'dec',d:'medium',t:'num',q:'₹45.50 + ₹23.75 = ? (in rupees)',a:'69.25'},
+  {id:'dec-o1',c:'dec',d:'olympiad',t:'num',q:'2.5 × 0.4 = ?',a:'1'},
+  {id:'dec-o2',c:'dec',d:'olympiad',t:'num',q:'A ribbon 7.5 m long is cut into pieces of 0.25 m each. How many pieces are there?',a:'30'},
+
+  {id:'int-e1',c:'int',d:'easy',t:'num',q:'−3 + 7 = ?',a:'4'},
+  {id:'int-e2',c:'int',d:'easy',t:'mcq',q:'Which is the smallest?',o:['−5','2','0','−1'],a:'−5'},
+  {id:'int-m1',c:'int',d:'medium',t:'num',q:'−8 − (−3) = ?',a:'-5'},
+  {id:'int-m2',c:'int',d:'medium',t:'num',q:'The temperature is 5°C at noon and falls by 9°C by midnight. What is the temperature at midnight (in °C)?',a:'-4'},
+  {id:'int-o1',c:'int',d:'olympiad',t:'num',q:'What is the sum of all integers from −10 to 12?',a:'23'},
+  {id:'int-o2',c:'int',d:'olympiad',t:'num',q:'A lift is at floor −2 (basement). It goes up 7 floors, then down 3 floors. Which floor is it on now?',a:'2'},
+
+  {id:'ratio-e1',c:'ratio',d:'easy',t:'mcq',q:'What is the ratio of 20 to 30 in its simplest form?',o:['2:3','3:2','20:3','4:5'],a:'2:3'},
+  {id:'ratio-e2',c:'ratio',d:'easy',t:'num',q:'3 pens cost ₹30. How much do 7 pens cost (in rupees)?',a:'70'},
+  {id:'ratio-m1',c:'ratio',d:'medium',t:'num',q:'₹600 is divided between A and B in the ratio 2:3. How much does A get (in rupees)?',a:'240'},
+  {id:'ratio-m2',c:'ratio',d:'medium',t:'mcq',q:'Are 4:6 and 10:15 in proportion?',o:['Yes','No'],a:'Yes'},
+  {id:'ratio-o1',c:'ratio',d:'olympiad',t:'num',q:'The ratio of boys to girls in a class of 40 is 3:5. How many more girls than boys are there?',a:'10'},
+  {id:'ratio-o2',c:'ratio',d:'olympiad',t:'num',q:'6 workers build a wall in 10 days. How many days would 15 workers take at the same rate?',a:'4'},
+
+  {id:'mens-e1',c:'mens',d:'easy',t:'num',q:'What is the perimeter of a rectangle 8 cm long and 5 cm wide (in cm)?',a:'26'},
+  {id:'mens-e2',c:'mens',d:'easy',t:'num',q:'What is the area of a square with side 7 cm (in cm²)?',a:'49'},
+  {id:'mens-m1',c:'mens',d:'medium',t:'num',q:'A square has a perimeter of 36 cm. What is its area (in cm²)?',a:'81'},
+  {id:'mens-m2',c:'mens',d:'medium',t:'num',q:'A rectangle has an area of 72 cm² and a length of 9 cm. What is its breadth (in cm)?',a:'8'},
+  {id:'mens-o1',c:'mens',d:'olympiad',t:'num',q:'A garden is 20 m by 15 m. A path 1 m wide runs inside it along the border. What is the area of the path (in m²)?',a:'66'},
+  {id:'mens-o2',c:'mens',d:'olympiad',t:'num',q:'How many tiles of 2 cm × 3 cm are needed to cover a board of 12 cm × 18 cm exactly?',a:'36'},
+
+  {id:'logic-e1',c:'logic',d:'easy',t:'num',q:'What comes next: 3, 6, 12, 24, ?',a:'48'},
+  {id:'logic-e2',c:'logic',d:'easy',t:'num',q:'What comes next: 1, 4, 9, 16, ?',a:'25'},
+  {id:'logic-m1',c:'logic',d:'medium',t:'num',q:'What comes next: 2, 3, 5, 8, 12, ?',a:'17'},
+  {id:'logic-m2',c:'logic',d:'medium',t:'mcq',q:'If CAT is written as DBU in a code, how is DOG written?',o:['EPH','EOH','FPH','DPH'],a:'EPH'},
+  {id:'logic-o1',c:'logic',d:'olympiad',t:'num',q:'How many squares of all sizes are there in a 3 × 3 grid?',a:'14'},
+  {id:'logic-o2',c:'logic',d:'olympiad',t:'mcq',q:'Today is Wednesday. What day of the week will it be 100 days from today?',o:['Thursday','Friday','Saturday','Sunday'],a:'Friday'}
+];
+const QBYID = Object.fromEntries(Q.map(q=>[q.id,q]));
+const USERS = { parent:{pw:'Parent@123', role:'parent'}, child:{pw:'Child@123', role:'child'} };
+const MISTAKES = {careless:'Careless mistake', concept:"Didn't understand", rule:'Forgot the rule or formula', time:'Ran out of time'};
+
+/* ============ Dates ============ */
+const pad=n=>String(n).padStart(2,'0');
+const fmt=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const today=()=>fmt(new Date());
+function shift(ds,n){const [y,m,d]=ds.split('-').map(Number);return fmt(new Date(y,m-1,d+n));}
+function revisionDate(ds,n){
+  const [y,m,d]=ds.split('-').map(Number);
+  const dim=new Date(y,m,0).getDate();
+  return fmt(new Date(y,m-1,Math.min(d+n,dim)));
+}
+function pretty(ds){const [y,m,d]=ds.split('-').map(Number);return new Date(y,m-1,d).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});}
+function short(ds){const [y,m,d]=ds.split('-').map(Number);return new Date(y,m-1,d).toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short'});}
+function mondayOf(ds){const [y,m,d]=ds.split('-').map(Number);const wd=(new Date(y,m-1,d).getDay()+6)%7;return shift(ds,-wd);}
+const mmss=s=>`${pad(Math.floor(s/60))}:${pad(Math.floor(s%60))}`;
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* ============ Storage ============ */
+const KEY='conceptcoach.maths.v1';
+let memDB=null, memAuth=null;
+function fresh(){return {settings:{nick:'Arjun',perSession:10},attempts:[],sessions:[],offline:[]};}
+function load(){try{const s=localStorage.getItem(KEY);if(s)return JSON.parse(s);}catch(e){} return memDB||fresh();}
+function save(db){memDB=db;try{localStorage.setItem(KEY,JSON.stringify(db));}catch(e){}}
+function getAuth(){try{const s=localStorage.getItem(KEY+'.auth');if(s)return JSON.parse(s);}catch(e){} return memAuth;}
+function setAuth(a){memAuth=a;try{a?localStorage.setItem(KEY+'.auth',JSON.stringify(a)):localStorage.removeItem(KEY+'.auth');}catch(e){}}
+const uid=()=>Math.random().toString(36).slice(2,10);
+
+/* ============ Scoring rules ============ */
+const WEIGHT={easy:1,medium:2,olympiad:1};
+function allAttempts(db,upTo){
+  const list=db.attempts.map(a=>({c:a.c,d:a.d,date:a.date,correct:a.correct,skipped:a.skipped}));
+  for(const o of db.offline){for(let i=0;i<o.total;i++)list.push({c:o.c,d:o.d,date:o.date,correct:i<o.correct,skipped:false});}
+  return upTo?list.filter(x=>x.date<=upTo):list;
+}
+function mastery(db,c,upTo){
+  const a=allAttempts(db,upTo).filter(x=>x.c===c);
+  if(a.length<5)return {n:a.length,pct:null};
+  let s=0,w=0;
+  for(const x of a){const wt=WEIGHT[x.d];w+=wt;if(x.correct||x.skipped)s+=wt;}
+  return {n:a.length,pct:Math.round(100*s/w)};
+}
+function status(p){if(p==null)return 'nodata';if(p>85)return 'strong';if(p>=60)return 'practice';return 'weak';}
+const SLABEL={strong:'Strong',practice:'Needs practice',weak:'Weak',nodata:'Not enough data'};
+function chip(st){return `<span class="chip s-${st}">${SLABEL[st]}</span>`;}
+function nextRevision(db,c){
+  const dates=[...new Set(allAttempts(db).filter(x=>x.c===c).map(x=>x.date))].sort();
+  let stage=0,due=null;
+  for(const d of dates){
+    const st=status(mastery(db,c,d).pct);
+    if(st==='strong'){due=revisionDate(d,[2,7,21][stage]);stage=Math.min(stage+1,2);}
+    else if(st==='practice'){due=revisionDate(d,2);stage=0;}
+    else {due=revisionDate(d,1);stage=0;}
+  }
+  return due;
+}
+function practiceDates(db){return [...db.sessions.map(s=>s.date),...db.offline.map(o=>o.date)];}
+function streak(db){
+  const ev=practiceDates(db).sort().reverse();
+  const t=today(),y=shift(t,-1);
+  let cur=ev.includes(t)?t:(ev.includes(y)?y:null);
+  if(!cur)return 0;
+  let n=0;
+  for(const d of ev){
+    if(d>cur)continue;
+    if(d===cur){n++;}
+    else if(d===shift(cur,-1)){cur=d;n++;}
+    else break;
+  }
+  return n;
+}
+function checkAnswer(q,input){
+  if(q.t==='mcq')return input===q.a;
+  const clean=s=>String(s).replace(/−/g,'-').replace(/[,\s₹]/g,'');
+  const v=clean(input);
+  if(v==='')return false;
+  const val=s=>{if(s.includes('/')){const [a,b]=s.split('/').map(Number);return b?a/b:NaN;}return Number(s);};
+  if(q.t==='frac'&&v.includes('/'))return v===clean(q.a);
+  const x=val(v);
+  return !isNaN(x)&&Math.abs(x-val(clean(q.a)))<1e-9;
+}
+
+/* ============ Practice ============ */
+let S=null, timerHandle=null, timerStart=0;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function pickQuestions(db,n){
+  const t=today();
+  const ranked=CONCEPTS.map(c=>({c:c.id,p:mastery(db,c.id).pct??-1})).sort((a,b)=>a.p-b.p);
+  const weak=ranked.slice(0,3).map(x=>x.c);
+  const due=CONCEPTS.filter(c=>{const d=nextRevision(db,c.id);return d&&d<=t;}).map(c=>c.id);
+  const picked=[];const has=id=>picked.includes(id);
+  const take=(pool,k)=>{for(const q of shuffle(pool.slice())){if(k<=0)break;if(!has(q.id)){picked.push(q.id);k--;}}};
+  take(Q.filter(q=>weak.includes(q.c)),Math.ceil(n*0.6));
+  take(Q.filter(q=>due.includes(q.c)),Math.min(Math.ceil(n*0.3),n-picked.length));
+  if(!picked.some(id=>QBYID[id].d==='olympiad'))take(Q.filter(q=>q.d==='olympiad'),Math.min(1,n-picked.length));
+  take(Q,n-picked.length);
+  return shuffle(picked).slice(0,n);
+}
+function diagnosticQuestions(){
+  const ids=[];
+  for(const c of CONCEPTS){
+    ids.push(Q.find(q=>q.c===c.id&&q.d==='easy').id);
+    ids.push(Q.find(q=>q.c===c.id&&q.d==='medium').id);
+  }
+  return ids;
+}
+function startSession(kind){
+  const db=load();
+  const qs=kind==='diagnostic'?diagnosticQuestions():pickQuestions(db,db.settings.perSession);
+  S={id:uid(),kind,qs,i:0,phase:'ask',chosen:null,typed:'',results:[],seconds:null};
+  if(timerHandle)clearInterval(timerHandle);
+  timerStart=Date.now();
+  timerHandle=setInterval(()=>{const el=document.getElementById('timer');if(el)el.textContent=mmss((Date.now()-timerStart)/1000);},1000);
+  go('#/practice');
+}
+function finishSession(){
+  const db=load();const d=today();
+  S.seconds=Math.round((Date.now()-timerStart)/1000);
+  for(const r of S.results){const q=QBYID[r.qid];db.attempts.push({qid:r.qid,c:q.c,d:q.d,date:d,correct:r.correct,skipped:r.skipped,mistake:r.mistake||null,session:S.id});}
+  db.sessions.push({id:S.id,date:d,kind:S.kind,total:S.results.length,correct:S.results.filter(r=>r.correct).length,skipped:S.results.filter(r=>r.skipped).length,seconds:S.seconds});
+  save(db);
+  S.phase='done';
+  go('#/results');
+}
+
+/* ============ Routing ============ */
+function go(h){if(location.hash===h)render();else location.hash=h;}
+window.addEventListener('hashchange',render);
+function render(){
+  const auth=getAuth();
+  const h=location.hash||'#/login';
+  const who=document.getElementById('who');
+  who.innerHTML=auth?`<span>Signed in as <b>${auth.user}</b></span><button class="link" data-act="logout">Log out</button>`:'';
+  const app=document.getElementById('app');
+  if(!auth){app.innerHTML=viewLogin();return;}
+  if(h.startsWith('#/parent')){
+    if(!auth){go('#/login');return;}
+    const tab=h.split('/')[2]||'dashboard';
+    app.innerHTML=viewParent(tab);return;
+  }
+  if(auth.role==='parent'){go('#/parent');return;}
+  if(h==='#/practice'){app.innerHTML=S&&S.phase!=='done'?viewPractice():viewChildHome();return;}
+  if(h==='#/results'){app.innerHTML=S&&S.phase==='done'?viewResults():viewChildHome();return;}
+  if(h==='#/help'){app.innerHTML=viewHelp('#/child');return;}
+  app.innerHTML=viewChildHome();
+}
+
+/* ============ Views ============ */
+function viewLogin(){
+  return `<div class="login card">
+    <h1>Welcome 👋</h1>
+    <p class="muted">Sign in to practise or to see progress.</p>
+    <form data-form="login">
+      <label for="u">Username</label><input id="u" name="u" autocomplete="username" required>
+      <label for="p">Password</label><input id="p" name="p" type="password" autocomplete="current-password" required>
+      <div class="row" style="margin-top:16px"><button class="primary" type="submit">Sign in</button></div>
+      <div id="loginErr"></div>
+    </form>
+  </div>`;
+}
+function conceptGrid(db){
+  return `<div class="concepts">${CONCEPTS.map(c=>{const m=mastery(db,c.id);return `<div class="concept"><span>${c.name}</span>${chip(status(m.pct))}</div>`;}).join('')}</div>`;
+}
+function viewChildHome(){
+  const db=load();const st=streak(db);
+  const last=db.sessions.slice(-1)[0];
+  return `<h1>Hi ${esc(db.settings.nick)}! 🔥</h1>
+  <p class="muted">${st?`You're on a <b>${st}-day streak</b>. Keep it going!`:'Start a practice today to begin your streak.'}</p>
+  <div class="card">
+    <h2 style="margin-top:0">Today's practice</h2>
+    <p class="muted">${db.settings.perSession} questions, picked from the topics you need most, plus one Olympiad challenge.</p>
+    <div class="row"><button class="primary" data-act="start" data-kind="practice">Start practice</button>
+    <button data-act="start" data-kind="diagnostic">Take the diagnostic test (16 questions)</button></div>
+  </div>
+  ${last?`<div class="card"><b>Last practice:</b> ${pretty(last.date)} · ${last.correct}/${last.total} correct · ${mmss(last.seconds)}</div>`:''}
+  <h2>Your topics</h2>
+  ${conceptGrid(db)}
+  <p style="margin-top:20px"><a href="#/help">How are my topics scored?</a></p>`;
+}
+function viewPractice(){
+  const q=QBYID[S.qs[S.i]];
+  const pct=Math.round(100*S.i/S.qs.length);
+  let body='';
+  if(q.t==='mcq'){
+    body=`<div class="opts">${q.o.map(o=>{
+      let cls='opt';
+      if(S.phase==='ask'&&S.chosen===o)cls+=' sel';
+      if(S.phase==='feedback'){if(o===q.a)cls+=' right';else if(o===S.chosen)cls+=' wrong';}
+      return `<button class="${cls}" data-act="choose" data-v="${esc(o)}" ${S.phase!=='ask'?'disabled':''}>${esc(o)}</button>`;}).join('')}</div>`;
+  } else {
+    body=`<label for="ans">Your answer</label><input id="ans" data-input="ans" value="${esc(S.typed)}" ${S.phase!=='ask'?'disabled':''} inputmode="text" autocomplete="off">`;
+  }
+  let foot='';
+  if(S.phase==='ask'){
+    foot=`<div class="row" style="margin-top:18px"><button class="primary" data-act="submit">Submit</button><button data-act="skip">Skip</button></div>`;
+  } else {
+    const r=S.results[S.results.length-1];
+    if(r.skipped)foot=`<div class="feedback skip">Skipped. The answer is ${esc(q.a)}.</div>`;
+    else if(r.correct)foot=`<div class="feedback right">Correct! 🎉</div>`;
+    else foot=`<div class="feedback wrong">Not quite. The answer is ${esc(q.a)}.</div>
+      <p style="margin:14px 0 6px;font-weight:700">What went wrong?</p>
+      <div class="row">${Object.entries(MISTAKES).map(([k,v])=>`<button data-act="mistake" data-v="${k}" class="${r.mistake===k?'opt sel':''}">${v}</button>`).join('')}</div>`;
+    const ready=r.correct||r.skipped||r.mistake;
+    foot+=`<div class="row" style="margin-top:18px"><button class="primary" data-act="next" ${ready?'':'disabled'}>${S.i+1===S.qs.length?'Finish':'Next question'}</button></div>`;
+  }
+  return `<div class="qhead"><b>Question ${S.i+1} of ${S.qs.length}</b><span>⏱ <span id="timer">${mmss((Date.now()-timerStart)/1000)}</span></span></div>
+  <div class="progress" style="margin:10px 0 16px"><i style="width:${pct}%"></i></div>
+  <div class="card">
+    <div class="row"><span class="badge">${CNAME[q.c]}</span><span class="badge ${q.d==='olympiad'?'olympiad':''}">${q.d}</span></div>
+    <div class="qtext">${esc(q.q)}</div>
+    ${body}${foot}
+  </div>`;
+}
+function viewResults(){
+  const total=S.results.length,correct=S.results.filter(r=>r.correct).length,skipped=S.results.filter(r=>r.skipped).length;
+  const by={};
+  for(const r of S.results){const c=QBYID[r.qid].c;by[c]=by[c]||{t:0,k:0};by[c].t++;if(r.correct)by[c].k++;}
+  return `<h1>${correct===total?'Perfect score! 🏆':'Well done! 👏'}</h1>
+  <div class="grid">
+    <div class="card stat"><div class="n">${correct}/${total}</div><div class="l">Correct</div></div>
+    <div class="card stat"><div class="n">${skipped}</div><div class="l">Skipped</div></div>
+    <div class="card stat"><div class="n"><span id="timer">${mmss(S.seconds)}</span></div><div class="l">Time taken</div></div>
+  </div>
+  <h2>By topic</h2>
+  <div class="card tablewrap"><table><tr><th>Topic</th><th>Correct</th></tr>
+  ${Object.entries(by).map(([c,v])=>`<tr><td>${CNAME[c]}</td><td>${v.k}/${v.t}</td></tr>`).join('')}</table></div>
+  <div class="row"><button class="primary" data-act="home">Back to home</button></div>`;
+}
+
+function parentTabs(tab){
+  const t=[['dashboard','Dashboard'],['report','Weekly report'],['offline','Add offline practice'],['history','History'],['settings','Settings'],['help','How scoring works']];
+  return `<nav class="tabs">${t.map(([k,v])=>`<a href="#/parent/${k}" class="${tab===k?'on':''}">${v}</a>`).join('')}</nav>`;
+}
+function viewParent(tab){
+  const db=load();
+  let body='';
+  if(tab==='report')body=viewReport(db);
+  else if(tab==='offline')body=viewOffline();
+  else if(tab==='history')body=viewHistory(db);
+  else if(tab==='settings')body=viewSettings(db);
+  else if(tab==='help')body=viewHelp();
+  else body=viewDashboard(db);
+  return `<h1>${esc(db.settings.nick)}'s progress</h1>${parentTabs(tab)}${body}`;
+}
+function viewDashboard(db){
+  const all=allAttempts(db);const t=today();
+  const acc=all.length?Math.round(100*all.filter(x=>x.correct).length/all.length):0;
+  const lastDay=practiceDates(db).sort().slice(-1)[0];
+  return `<div class="grid">
+    <div class="card stat"><div class="n">${all.length}</div><div class="l">Questions practised</div></div>
+    <div class="card stat"><div class="n">${all.length?acc+'%':'–'}</div><div class="l">Overall accuracy</div></div>
+    <div class="card stat"><div class="n">${streak(db)}</div><div class="l">Day streak</div></div>
+    <div class="card stat"><div class="n" style="font-size:20px;padding-top:6px">${lastDay?pretty(lastDay):'–'}</div><div class="l">Last practised</div></div>
+  </div>
+  <h2>Concept mastery</h2>
+  <div class="card tablewrap"><table>
+    <tr><th>Concept</th><th>Attempts</th><th>Mastery</th><th>Status</th><th>Next revision</th></tr>
+    ${CONCEPTS.map(c=>{const m=mastery(db,c.id);const nr=nextRevision(db,c.id);
+      return `<tr><td>${c.name}</td><td>${m.n}</td><td>${m.pct==null?'–':m.pct+'%'}</td><td>${chip(status(m.pct))}</td><td>${nr?pretty(nr)+(nr<=t?' <span class="chip s-weak">Due</span>':''):'–'}</td></tr>`;}).join('')}
+  </table></div>`;
+}
+let reportOffset=0;
+function viewReport(db){
+  const mon=shift(mondayOf(today()),7*reportOffset);const sun=shift(mon,6);
+  const inWeek=d=>d>=mon&&d<sun;
+  const wk=allAttempts(db).filter(x=>inWeek(x.date));
+  const correct=wk.filter(x=>x.correct).length;
+  const days=[...new Set(wk.map(x=>x.date))].sort();
+  const ranked=CONCEPTS.map(c=>{const a=allAttempts(db).filter(x=>x.c===c.id);return {c:c.id,n:a.length,acc:a.length?a.filter(x=>x.correct).length/a.length:0};})
+    .filter(x=>x.n>=5).sort((a,b)=>a.acc-b.acc).slice(0,3);
+  const mist=db.attempts.filter(a=>inWeek(a.date)&&a.mistake);
+  const mc={};for(const a of mist)mc[a.mistake]=(mc[a.mistake]||0)+1;
+  const weakest=ranked[0];
+  return `<div class="row" style="justify-content:space-between;margin-top:8px">
+    <button data-act="week" data-v="-1">← Previous week</button>
+    <b>${pretty(mon)} – ${pretty(sun)}</b>
+    <button data-act="week" data-v="1" ${reportOffset>=0?'disabled':''}>Next week →</button>
+  </div>
+  <div class="grid" style="margin-top:12px">
+    <div class="card stat"><div class="n">${wk.length}</div><div class="l">Questions attempted</div></div>
+    <div class="card stat"><div class="n">${wk.length?Math.round(100*correct/wk.length)+'%':'–'}</div><div class="l">Accuracy this week</div></div>
+    <div class="card stat"><div class="n">${days.length}</div><div class="l">Days practised</div></div>
+  </div>
+  ${days.length?`<p class="muted">Practised on: ${days.map(short).join(', ')}</p>`:''}
+  <h2>Top weak concepts</h2>
+  <div class="card">${ranked.length?`<ol>${ranked.map(r=>{const m=mastery(db,r.c);return `<li><b>${CNAME[r.c]}</b> · mastery ${m.pct}% ${chip(status(m.pct))}</li>`;}).join('')}</ol>`:'<p class="muted">Not enough practice yet. Each concept needs at least 5 attempts.</p>'}</div>
+  <h2>What kind of mistakes?</h2>
+  <div class="card">${mist.length?Object.entries(MISTAKES).map(([k,v])=>{const p=Math.round(100*(mc[k]||0)/mist.length);return `<div class="bar"><span class="t">${v}</span><span class="b"><i style="width:${p}%"></i></span><span class="v">${p}%</span></div>`;}).join(''):'<p class="muted">No mistakes recorded this week.</p>'}</div>
+  <h2>Suggested action</h2>
+  <div class="card">${weakest?`Focus on <b>${CNAME[weakest.c]}</b> this week. ${CONCEPTS.find(c=>c.id===weakest.c).tip}`:'Keep practising daily so the coach can find weak spots.'}</div>`;
+}
+function viewOffline(){
+  return `<div class="card">
+    <p class="muted" style="margin-top:0">Did your child practise on paper or in a workbook? Add it here so it counts towards mastery.</p>
+    <form data-form="offline">
+      <label for="od">Date</label><input id="od" name="date" type="date" max="${today()}" required>
+      <label for="oc">Concept</label><select id="oc" name="c">${CONCEPTS.map(c=>`<option value="${c.id}">${c.name}</option>`).join('')}</select>
+      <label for="ol">Difficulty</label><select id="ol" name="d"><option value="easy">Easy</option><option value="medium">Medium</option><option value="olympiad">Olympiad</option></select>
+      <label for="ot">Questions attempted</label><input id="ot" name="total" type="number" min="1" max="50" required>
+      <label for="ok">Questions correct</label><input id="ok" name="correct" type="number" min="0" required>
+      <div class="row" style="margin-top:16px"><button class="primary" type="submit">Add practice</button></div>
+      <div id="offMsg"></div>
+    </form></div>`;
+}
+function viewHistory(db){
+  const rows=[...db.sessions.map(s=>({date:s.date,type:s.kind==='diagnostic'?'Diagnostic test':'Practice',what:'Mixed topics',score:`${s.correct}/${s.total}`+(s.skipped?` (${s.skipped} skipped)`:''),time:mmss(s.seconds)})),
+    ...db.offline.map(o=>({date:o.date,type:'Offline',what:`${CNAME[o.c]} · ${o.d}`,score:`${o.correct}/${o.total}`,time:'–'}))].sort((a,b)=>a.date<b.date?1:-1);
+  return `<div class="card tablewrap">${rows.length?`<table><tr><th>Date</th><th>Type</th><th>Topics</th><th>Score</th><th>Time</th></tr>${rows.map(r=>`<tr><td>${pretty(r.date)}</td><td>${r.type}</td><td>${r.what}</td><td>${r.score}</td><td>${r.time}</td></tr>`).join('')}</table>`:'<p class="muted">No practice yet.</p>'}</div>`;
+}
+let resetArmed=false;
+function viewSettings(db){
+  return `<div class="card"><form data-form="settings">
+    <label for="sn">Child's nickname</label><input id="sn" name="nick" value="${esc(db.settings.nick)}" maxlength="20" required>
+    <label for="sp">Questions per practice (5–20)</label><input id="sp" name="per" type="number" min="5" max="20" value="${db.settings.perSession}" required>
+    <div class="row" style="margin-top:16px"><button class="primary" type="submit">Save</button></div>
+    <div id="setMsg"></div>
+  </form></div>
+  <div class="card"><h2 style="margin-top:0">Reset</h2><p class="muted">Deletes all practice, sessions and offline entries.</p>
+  <button data-act="reset">${resetArmed?'Click again to delete everything':'Reset all data'}</button></div>`;
+}
+function viewHelp(back){
+  return `<div class="card help">
+  <h2 style="margin-top:0">How scoring works</h2>
+  <ul>
+    <li><b>Mastery</b> for a concept is the weighted accuracy over all attempts in that concept. Easy questions count 1, Medium count 2, Olympiad count 3. Skipped questions count as wrong. Offline practice counts too.</li>
+    <li>A concept needs <b>at least 5 attempts</b> before it gets a mastery score. Until then it shows "Not enough data".</li>
+    <li><b>Strong:</b> 85% and above. <b>Needs practice:</b> 60% to 84%. <b>Weak:</b> below 60%.</li>
+    <li><b>Revision:</b> after each day a concept is practised, its next revision date is set from that day. Strong: 2 days, then 7, then 21 on later strong days. Needs practice: 2 days. Weak or not enough data: the next day.</li>
+    <li><b>Day streak:</b> the number of consecutive days with at least one practice (online or offline), counting back from today, or from yesterday if there is no practice today yet.</li>
+    <li><b>Weekly report:</b> covers Monday to Sunday. "Top weak concepts" lists up to 3 concepts with the lowest mastery, among concepts with at least 5 attempts.</li>
+    <li><b>Answers:</b> for fraction answers, any equivalent fraction or decimal is accepted (for example 3/4, 6/8 or 0.75). Number answers ignore commas and spaces.</li>
+    <li><b>Offline practice:</b> the date can't be in the future, questions attempted must be 1 to 50, and questions correct can't be more than questions attempted.</li>
+  </ul>
+  ${back?`<a href="${back}">← Back</a>`:''}</div>`;
+}
+
+/* ============ Events ============ */
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]');if(!b)return;
+  const act=b.dataset.act;
+  if(act==='logout'){setAuth(null);S=null;go('#/login');return;}
+  if(act==='start'){startSession(b.dataset.kind);return;}
+  if(act==='home'){go('#/child');return;}
+  if(act==='week'){reportOffset=Math.min(0,reportOffset+Number(b.dataset.v));render();return;}
+  if(act==='reset'){if(!resetArmed){resetArmed=true;render();return;}resetArmed=false;const db=load();save({...fresh(),settings:db.settings});render();return;}
+  if(!S)return;
+  if(act==='choose'&&S.phase==='ask'){S.chosen=b.dataset.v;render();return;}
+  if(act==='submit'||act==='skip'){
+    const q=QBYID[S.qs[S.i]];
+    if(act==='submit'){
+      const input=q.t==='mcq'?S.chosen:S.typed;
+      if(input==null||String(input).trim()===''){return;}
+      S.results.push({qid:q.id,correct:checkAnswer(q,input),skipped:false,mistake:null});
+    } else S.results.push({qid:q.id,correct:false,skipped:true,mistake:null});
+    S.phase='feedback';render();return;
+  }
+  if(act==='mistake'){S.results[S.results.length-1].mistake=b.dataset.v;render();return;}
+  if(act==='next'){
+    if(S.i+1>=S.qs.length){finishSession();return;}
+    S.i++;S.phase='ask';S.chosen=null;S.typed='';render();
+    const inp=document.getElementById('ans');if(inp)inp.focus();
+  }
+});
+document.addEventListener('input',e=>{if(e.target.dataset.input==='ans'&&S)S.typed=e.target.value;});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.dataset&&e.target.dataset.input==='ans'){e.preventDefault();const b=document.querySelector('[data-act="submit"]');if(b)b.click();}});
+document.addEventListener('submit',e=>{
+  const f=e.target;const kind=f.dataset.form;if(!kind)return;
+  e.preventDefault();const fd=new FormData(f);
+  if(kind==='login'){
+    const u=String(fd.get('u')).trim().toLowerCase(),p=String(fd.get('p'));
+    const acct=USERS[u];
+    if(!acct||acct.pw!==p){document.getElementById('loginErr').innerHTML='<div class="err">Wrong username or password.</div>';return;}
+    setAuth({user:u,role:acct.role});go(acct.role==='parent'?'#/parent':'#/child');return;
+  }
+  if(kind==='offline'){
+    const msg=document.getElementById('offMsg');
+    const date=String(fd.get('date')),total=Number(fd.get('total')),correct=Number(fd.get('correct'));
+    const errs=[];
+    if(!date)errs.push('Pick a date.');
+    else if(date>today())errs.push("The date can't be in the future.");
+    if(!Number.isInteger(total)||total<1||total>50)errs.push('Questions attempted must be a whole number from 1 to 50.');
+    if(!Number.isInteger(correct)||correct<0)errs.push('Questions correct must be a whole number, 0 or more.');
+    if(errs.length){msg.innerHTML=`<div class="err">${errs.join('<br>')}</div>`;return;}
+    const db=load();db.offline.push({id:uid(),date,c:String(fd.get('c')),d:String(fd.get('d')),total,correct});save(db);
+    f.reset();msg.innerHTML=`<div class="ok">Added: ${correct}/${total} in ${CNAME[String(fd.get('c'))]} on ${pretty(date)}.</div>`;return;
+  }
+  if(kind==='settings'){
+    const msg=document.getElementById('setMsg');
+    const nick=String(fd.get('nick')).trim(),per=Number(fd.get('per'));
+    if(!nick){msg.innerHTML='<div class="err">Enter a nickname.</div>';return;}
+    if(!Number.isInteger(per)||per<5||per>20){msg.innerHTML='<div class="err">Questions per practice must be from 5 to 20.</div>';return;}
+    const db=load();db.settings={nick,perSession:per};save(db);render();
+    document.getElementById('setMsg').innerHTML='<div class="ok">Saved.</div>';
+  }
+});
+render();
+</script>
+</body>
+</html>
