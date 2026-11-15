@@ -1,6 +1,6 @@
 # App: Concept Coach · Maths
 
-**URL:** https://YOUR-GITHUB-USERNAME.github.io/concept-coach/  *(update after deploying)*
+**URL:** https://rajiqxf2.github.io/concept-coach/  *(update after deploying)*
 
 A practice and progress app for a Class 6 student preparing for school exams and maths olympiads. The child practises short sets of questions; the parent sees which concepts are strong or weak and what to do next. All data is stored in the browser (localStorage), so a fresh browser starts empty.
 
